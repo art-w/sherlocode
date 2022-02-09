@@ -1,0 +1,4 @@
+profile = janestreet
+let-binding-spacing = compact
+sequence-style = separator
+doc-comments = after-when-possible

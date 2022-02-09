@@ -1,0 +1,16 @@
+(library
+ (name regex)
+ (libraries str db))
+
+(ocamllex lexer)
+
+(menhir
+ (modules parser)
+ (flags --explain))
+
+(env
+ (dev
+  (flags
+   (:standard -w -39))))
+
+; menhir unused-rec-flag
