@@ -13,8 +13,9 @@
   (name sherlocode)
   (synopsis "Realtime grep for OCaml sources available on opam")
   (depends
-    (ocaml (>= "4.08"))
+    (ocaml (and (>= "4.08") (<= "4.13.0")))
     (ancient (>= "0.9.1"))
+    (cmdliner (>= "1.1.0"))
     (lwt (>= "4.5.2"))
     (higlo (>= "0.8"))
     (tyxml (>= "4.5.0"))

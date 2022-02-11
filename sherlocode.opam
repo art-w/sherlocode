@@ -9,8 +9,9 @@ homepage: "https://github.com/art-w/sherlocode"
 bug-reports: "https://github.com/art-w/sherlocode/issues"
 depends: [
   "dune" {>= "2.8"}
-  "ocaml" {>= "4.08"}
+  "ocaml" {>= "4.08" & <= "4.13.0"}
   "ancient" {>= "0.9.1"}
+  "cmdliner" {>= "1.1.0"}
   "lwt" {>= "4.5.2"}
   "higlo" {>= "0.8"}
   "tyxml" {>= "4.5.0"}

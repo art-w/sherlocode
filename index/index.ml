@@ -121,9 +121,7 @@ let db_create_stdin t =
   in
   if t.nb_lines > 0 then save t else t
 
-let () =
-  let prefix = Sys.argv.(1) ^ "/" in
-  let path = Sys.argv.(2) in
+let main prefix path =
   let ancient = path ^ "/ancient.db" in
   let sources = path ^ "/source.txt" in
   let t0 = Unix.gettimeofday () in
@@ -134,3 +132,22 @@ let () =
   close_out t.sources ;
   let t1 = Unix.gettimeofday () in
   Printf.printf "Indexing in %fs\n%!" (t1 -. t0)
+
+open Cmdliner
+
+let prefix =
+  let doc = "Directory prefix that should be stripped from indexed files" in
+  Arg.(value & opt string "./" & info [ "prefix" ] ~docv:"PREFIX" ~doc)
+
+let target =
+  let doc = "Directory where the db will be stored" in
+  Arg.(required & pos 0 (some dir) None & info [] ~docv:"TARGET" ~doc)
+
+let index = Term.(const main $ prefix $ target)
+
+let cmd =
+  let doc = "Index the files provided on stdin" in
+  let info = Cmd.info "index" ~doc in
+  Cmd.v info index
+
+let () = exit (Cmd.eval cmd)

@@ -14,4 +14,4 @@ dune build index/index.exe
 
 find "$1" -name '*.ml*' \
   | sort -R \
-  | dune exec -- index/index.exe "$1" "$2"
+  | dune exec -- index/index.exe --prefix="$1" "$2"
