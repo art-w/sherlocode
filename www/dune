@@ -1,5 +1,3 @@
 (executable
  (name www)
- (libraries lwt dream higlo str tyxml db regex)
- (flags -rectypes) ; higlo
- )
+ (libraries lwt dream higlo str tyxml db regex))
