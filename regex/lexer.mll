@@ -12,6 +12,7 @@ rule token = parse
 | "\\."  { ANY }
 | "-"    { RANGE }
 | "\\["  { RANGE_START }
+| "\\[^" { RANGE_EXCL_START }
 | "\\]"  { RANGE_END }
 | "\\^"  { LINE_START }
 | "\\$"  { LINE_END }

@@ -16,13 +16,7 @@ let prefixes cs t =
       Char_set.fold (fun chr children -> Char_map.add chr t children) cs Char_map.empty
   }
 
-let alphabet =
-  let cs =
-    List.fold_left (fun acc chr -> Char_set.add chr acc) Char_set.empty
-    @@ List.filter Db.Alphabet.is_valid
-    @@ List.init 256 Char.chr
-  in
-  prefixes cs single
+let alphabet = prefixes Ast.alphabet single
 
 let rec union a b =
   { eos = a.eos || b.eos

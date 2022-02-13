@@ -24,3 +24,10 @@ let alphanum =
     Char_set.union
     (enum 'A' 'Z')
     [ enum 'a' 'z'; enum '0' '9'; Char_set.singleton '_'; Char_set.singleton '\'' ]
+
+let alphabet =
+  List.fold_left (fun acc chr -> Char_set.add chr acc) Char_set.empty
+  @@ List.filter (fun c -> Db.Alphabet.is_valid c && c <> '\n')
+  @@ List.init 256 Char.chr
+
+let inv cs = Char_set.diff alphabet cs

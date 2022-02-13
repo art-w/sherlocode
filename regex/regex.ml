@@ -127,7 +127,12 @@ let rec to_regex = function
   | Char_set cs ->
     let buf = Buffer.create (Char_set.cardinal cs) in
     Buffer.add_char buf '[' ;
-    Char_set.iter (fun c -> Buffer.add_char buf c) cs ;
+    if Char_set.mem ']' cs then Buffer.add_char buf ']' ;
+    Char_set.iter
+      (fun c -> if not (c = ']' || c = '-' || c = '^') then Buffer.add_char buf c)
+      cs ;
+    if Char_set.mem '^' cs then Buffer.add_char buf '^' ;
+    if Char_set.mem '-' cs then Buffer.add_char buf '-' ;
     Buffer.add_char buf ']' ;
     Buffer.contents buf
   | Or (a, b) -> "\\(" ^ to_regex a ^ "\\|" ^ to_regex b ^ "\\)"

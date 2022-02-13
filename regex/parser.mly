@@ -6,7 +6,7 @@
 %token ANY
 %token <char> CHAR
 %token PAR_OPEN PAR_CLOSE
-%token RANGE_START RANGE RANGE_END
+%token RANGE_START RANGE_EXCL_START RANGE RANGE_END
 %token OR
 %token STAR PLUS OPTIONAL
 %token ALPHANUM
@@ -53,7 +53,8 @@ atom:
 
 range:
 | ALPHANUM { Char_set Ast.alphanum }
-| RANGE_START r=range_contents { Char_set r }
+| RANGE_START      r=range_contents { Char_set r }
+| RANGE_EXCL_START r=range_contents { Char_set (inv r) }
 
 range_contents:
 | a=CHAR RANGE b=CHAR xs=range_contents { Char_set.union (enum a b) xs }

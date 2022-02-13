@@ -133,7 +133,7 @@ let rec successor_s ~depth t i =
     done
 
 let successor { size; s; _ } i =
-  if i > size
+  if i >= size
   then raise Not_found
   else (
     let depth = depth size in
