@@ -309,3 +309,11 @@ h2 code {
 p.hero {
   font-size: 1.5rem;
 }
+
+.ad {
+  padding-top: 3rem;
+  font-family: monospace;
+  font-style: italic;
+}
+
+.ad svg { vertical-align: middle; margin-right: 0.5rem }

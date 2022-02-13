@@ -4,9 +4,7 @@ let api ~cursor query =
   let+ results, stop = Search.api ~cursor query in
   Present.present ~query ~start:cursor ~stop results
 
-let api ~cursor query =
-  if query = "" then Lwt.return Ui.empty_propaganda else api ~cursor query
-
+let api ~cursor query = if query = "" then Lwt.return Ui.frontpage else api ~cursor query
 let get_query params = Option.value ~default:"" (Dream.query "q" params)
 
 let get_cursor ~db params =
