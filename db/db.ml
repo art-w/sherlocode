@@ -21,11 +21,13 @@ module Int_map = Map.Make (struct
 end)
 
 module Alphabet = struct
-  let valid_char c =
-    (c >= 'a' && c <= 'z')
-    || (c >= 'A' && c <= 'Z')
-    || (c >= '0' && c <= '9')
-    || String.contains " -+*%~#()[]{}$@!&|/\\`=^:;.,_'\"<>?\n" c
+  let is_alpha chr = chr = ' ' || (chr >= 'a' && chr <= 'z')
+
+  let valid_char chr =
+    is_alpha chr
+    || (chr >= 'A' && chr <= 'Z')
+    || (chr >= '0' && chr <= '9')
+    || String.contains "-+*%~#()[]{}$@!&|/\\`=^:;.,_'\"<>?\n" chr
 
   let alphabet = Array.make 256 '\000'
   let indexes = Array.make 256 (-1)
@@ -44,7 +46,6 @@ module Alphabet = struct
   let index c = indexes.(Char.code c)
   let _chr i = alphabet.(i)
   let is_valid c = index c >= 0
-  let is_alpha chr = chr = ' ' || (chr >= 'a' && chr <= 'z')
 
   let is_valid_string s =
     let rec go i = if i >= String.length s then true else is_valid s.[i] && go (i + 1) in

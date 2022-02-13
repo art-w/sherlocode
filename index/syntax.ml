@@ -31,7 +31,8 @@ let clean_line ~state line =
           go state (i + 1))
       | chr, _, _ ->
         (match state with
-        | [] when chr <> char0 -> Buffer.add_char buf chr
+        | [] when chr = '\t' -> Buffer.add_string buf "    "
+        | [] when Db.Alphabet.is_valid chr -> Buffer.add_char buf chr
         | _ -> ()) ;
         go state (i + 1))
   in
