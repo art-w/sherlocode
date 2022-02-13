@@ -1,4 +1,3 @@
-open Lwt.Syntax
 open Tyxml.Html
 open Search
 
@@ -56,7 +55,7 @@ let present_line_numbers ~filename matches =
   in
   fold (-2) matches
 
-let present_file ~db ~filename ~start_of_file matches =
+let present_file ~filename ~start_of_file matches =
   let _, matches =
     List.fold_left
       (fun (previous, acc) m ->
@@ -69,16 +68,16 @@ let present_file ~db ~filename ~start_of_file matches =
   let header = Ui.link_file filename in
   header :: present_line_numbers ~filename matches
 
-let present_file ~db matches =
+let present_file matches =
   match matches with
   | [] -> assert false
   | hd :: _ ->
     let _, start_of_file = Db.fileloc_of_line ~cursor:hd.cursor hd.offset in
-    present_file ~db ~filename:hd.filename ~start_of_file matches
+    present_file ~filename:hd.filename ~start_of_file matches
 
-let present_results ~db results =
+let present_results results =
   let groups = group_results_by_filename results in
-  List.concat @@ List.map (present_file ~db) groups
+  List.concat @@ List.map present_file groups
 
 let estimated_count ~start ~stop count =
   let total = Db.total_lines ~cursor:start in
@@ -119,12 +118,12 @@ let btn_more ~cursor query =
 
 let present ~query ~start ~stop results =
   let nb_results = List.length results in
-  let results = present_results ~db:start.Db.db results in
+  let results = present_results results in
   let more_link =
     match stop with
     | None -> []
     | Some cursor ->
-      let cursor = { cursor with Db.count = start.count + nb_results } in
+      let cursor = { cursor with Db.count = start.Db.count + nb_results } in
       [ btn_more ~cursor query ]
   in
   let count = estimated_count ~start ~stop nb_results in

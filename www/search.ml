@@ -95,7 +95,7 @@ let stream_of_query ~from q =
         shard := i + 1 ;
         Lwt.return (Some j)
       | j ->
-        let* () = Lwt_main.yield () in
+        let* () = Lwt.pause () in
         search j
       | exception Not_found -> Lwt.return None
     in
