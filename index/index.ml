@@ -89,9 +89,16 @@ let index filename t =
     fold_lines
       (fun (t, parse_state) str ->
         let parse_state, str = Syntax.clean_line ~state:parse_state str in
-        Ngrams.iter (fun ngram () -> store ngram t.nb_lines t) (get_ngrams str) ;
-        let t = output_line t str in
-        t, parse_state)
+        if String.length str > 256
+        then t, parse_state
+        else (
+          Ngrams.iter
+            (fun ngram () ->
+              Int_set.dense := ngram ;
+              store ngram t.nb_lines t)
+            (get_ngrams str) ;
+          let t = output_line t str in
+          t, parse_state))
       (t, Syntax.empty)
       filename
   in
