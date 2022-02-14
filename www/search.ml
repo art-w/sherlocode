@@ -163,7 +163,7 @@ let api ~cursor query =
   let nb_results = List.length results in
   let last_cursor, results =
     match List.rev results with
-    | last :: results when nb_results >= max_to_find ->
+    | last :: results when nb_results > max_to_find ->
       let c = { last.cursor with Db.count = cursor.count + nb_results - 1 } in
       Some c, List.rev results
     | _ -> None, results
