@@ -5,10 +5,10 @@ let api ~cursor query =
   Present.present ~query ~start:cursor ~stop results
 
 let api ~cursor query = if query = "" then Lwt.return Ui.frontpage else api ~cursor query
-let get_query params = Option.value ~default:"" (Dream.query "q" params)
+let get_query params = Option.value ~default:"" (Dream.query params "q")
 
 let get_cursor ~db params =
-  match Dream.query "ofs" params with
+  match Dream.query params "ofs" with
   | None -> Db.cursor_empty ~db
   | Some shard_offset -> Db.cursor_of_string ~db shard_offset
 
@@ -24,7 +24,8 @@ let string_of_tyxml' html = Format.asprintf "%a" (Tyxml.Html.pp_elt ()) html
 let cache : int -> Dream.middleware =
  fun max_age f req ->
   let+ response = f req in
-  Dream.add_header "Cache-Control" ("public, max-age=" ^ string_of_int max_age) response
+  Dream.add_header response "Cache-Control" ("public, max-age=" ^ string_of_int max_age) ;
+  response
 
 let webserver ~db ~max_age =
   Dream.run ~interface:"127.0.0.1" ~port:8888
@@ -45,7 +46,6 @@ let webserver ~db ~max_age =
        ; Dream.get "/robots.txt" (Dream.from_filesystem "static" "robots.txt")
        ; Dream.get "/favicon.ico" (Dream.from_filesystem "static" "favicon.svg")
        ]
-  @@ Dream.not_found
 
 let main path url_tsv max_age =
   Link.load url_tsv ;

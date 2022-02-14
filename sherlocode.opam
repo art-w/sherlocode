@@ -15,7 +15,7 @@ depends: [
   "lwt" {>= "4.5.2"}
   "higlo" {>= "0.8"}
   "tyxml" {>= "4.5.0"}
-  "dream"
+  "dream" {= "1.0.0~alpha3"}
   "odoc" {with-doc}
 ]
 build: [
