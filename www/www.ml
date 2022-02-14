@@ -44,7 +44,7 @@ let webserver ~db ~max_age =
                 string_of_tyxml' result))
        ; Dream.get "/s.css" (Dream.from_filesystem "static" "style.css")
        ; Dream.get "/robots.txt" (Dream.from_filesystem "static" "robots.txt")
-       ; Dream.get "/favicon.ico" (Dream.from_filesystem "static" "favicon.svg")
+       ; Dream.get "/favicon.ico" (Dream.from_filesystem "static" "favicon.ico")
        ]
 
 let main path url_tsv max_age =
