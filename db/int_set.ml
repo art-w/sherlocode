@@ -29,7 +29,10 @@ let dense_of_array t =
     (fun i ->
       let j = i / int_size in
       let i = i mod int_size in
-      arr.(j) <- arr.(j) lor (1 lsl i))
+      let v = arr.(j) in
+      let v' = v lor (1 lsl i) in
+      assert (v <> v') ;
+      arr.(j) <- v')
     t ;
   arr
 
@@ -42,6 +45,7 @@ let rec branch_of_array ~depth t =
     let children = Array.make base [] in
     let depth = depth / base in
     for i = Array.length t - 1 downto 0 do
+      let i = t.(i) in
       let j = i / depth in
       let i = i mod depth in
       children.(j) <- i :: children.(j)
@@ -80,8 +84,6 @@ let rec add_s ~depth t i =
     arr.(j) <- child' ;
     t
 
-let depth size = size
-
 let rec grow ({ size; s; _ } as t) i =
   if i >= size
   then (
@@ -108,26 +110,24 @@ let rec successor_s ~depth t i =
       let i = i mod int_size in
       let b = bs.(j) in
       let v = b land (1 lsl i) in
-      let r = v <> 0 in
-      if r
-      then (
-        let i = real_i in
-        raise (Found i))
+      if v <> 0 then raise (Found real_i)
     done
   | Sparse arr -> Array.iter (fun v -> if v >= i then raise (Found v)) arr
   | Branch bs ->
-    let depth = depth / Array.length bs in
+    let depth = depth / base in
     let j = i / depth in
     let i = i mod depth in
     let () =
       try successor_s ~depth bs.(j) i with
       | Found c ->
+        assert (c < depth) ;
         let c = (j * depth) + c in
         raise (Found c)
     in
     for k = j + 1 to Array.length bs - 1 do
       try successor_s ~depth bs.(k) 0 with
       | Found c ->
+        assert (c < depth) ;
         let c = (k * depth) + c in
         raise (Found c)
     done
@@ -136,9 +136,8 @@ let successor { size; s; _ } i =
   if i >= size
   then raise Not_found
   else (
-    let depth = depth size in
     try
-      successor_s ~depth s i ;
+      successor_s ~depth:size s i ;
       raise Not_found
     with
     | Found j -> j)

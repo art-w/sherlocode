@@ -48,7 +48,8 @@ let store key value t =
       Ngrams.add t.shard.ngrams key bs ;
       bs
   in
-  Int_set.add bs value
+  Int_set.add bs value ;
+  assert (Int_set.successor bs value = value)
 
 let get_ngrams str =
   let ngrams = Ngrams.create (String.length str) in
@@ -92,11 +93,7 @@ let index filename t =
         if String.length str > 256
         then t, parse_state
         else (
-          Ngrams.iter
-            (fun ngram () ->
-              Int_set.dense := ngram ;
-              store ngram t.nb_lines t)
-            (get_ngrams str) ;
+          Ngrams.iter (fun ngram () -> store ngram t.nb_lines t) (get_ngrams str) ;
           let t = output_line t str in
           t, parse_state))
       (t, Syntax.empty)
