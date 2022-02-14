@@ -60,11 +60,14 @@ let present_file ~filename ~start_of_file matches =
     List.fold_left
       (fun (previous, acc) m ->
         let ofs, lines = present_match ~previous m in
-        ofs, List.rev_append lines acc)
-      (start_of_file, [])
-      (List.rev matches)
+        ofs, lines :: acc)
+      (start_of_file - 1, [])
+      matches
   in
-  let matches = List.map (fun (ln, str) -> ln - start_of_file, str) matches in
+  let matches =
+    List.map (fun (ln, str) -> ln - start_of_file, str)
+    @@ List.fold_left (fun acc lines -> List.rev_append lines acc) [] matches
+  in
   let header = Ui.link_file filename in
   header :: present_line_numbers ~filename matches
 
