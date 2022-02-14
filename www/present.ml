@@ -109,15 +109,11 @@ let pretty_count (is_approx, count) =
   then "1 result"
   else Printf.sprintf "%i results" count
 
+let more_url query cursor =
+  "/?q=" ^ Uri.pct_encode ~component:`Query query ^ "&ofs=" ^ Db.string_of_cursor cursor
+
 let btn_more ~cursor query =
-  p
-    [ a
-        ~a:
-          [ a_class [ "btn" ]
-          ; a_href ("/?q=" ^ Uri.pct_encode query ^ "&ofs=" ^ Db.string_of_cursor cursor)
-          ]
-        [ txt "More »" ]
-    ]
+  p [ a ~a:[ a_class [ "btn" ]; a_href (more_url query cursor) ] [ txt "More »" ] ]
 
 let present ~query ~start ~stop results =
   let nb_results = List.length results in
