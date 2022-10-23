@@ -317,3 +317,18 @@ p.hero {
 }
 
 .ad svg { vertical-align: middle; margin-right: 0.5rem }
+
+.header a, .header a:visited {
+  display: block;
+  color: var(--lightbg);
+  margin: 0 1em;
+  padding: 0 1em;
+  text-decoration: underline;
+  line-height: 2.5em;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.header a:hover {
+  color: var(--yellow);
+}

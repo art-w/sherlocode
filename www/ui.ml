@@ -147,6 +147,13 @@ let search_form query =
               ]
             ()
         ; input ~a:[ a_input_type `Submit; a_value "Search" ] ()
+        ; a
+            ~a:
+              [ a_href "https://doc.sherlocode.com"
+              ; a_title
+                  "Fuzzy type/name search for OCaml documentation (Hoogle for odoc!)"
+              ]
+            [ txt "NEW: try Sherlodoc!" ]
         ]
     ]
 
