@@ -10,7 +10,7 @@ let link url filename line_number =
     Printf.sprintf "https://%s/-/blob/master/%s#L%i" url filename line_number
   | "bitbucket.org" :: _ ->
     Printf.sprintf "https://%s/src/master/%s#lines-%i" url filename line_number
-  | "forge.ocamlcore.org" :: _ -> "https://force.ocamlcore.org"
+  | "forge.ocamlcore.org" :: _ -> "https://forge.ocamlcore.org"
   | "erratique.ch" :: _ ->
     Printf.sprintf "https://%s/tree/%s#n%i" url filename line_number
   | "git.annexia.org" :: proj ->
@@ -64,6 +64,7 @@ let load filename =
 let split_project filename =
   let at = String.index filename '/' in
   let project = String.sub filename 0 at in
+  let at = at + 1 in
   let file = String.sub filename at (String.length filename - at) in
   project, file
 
