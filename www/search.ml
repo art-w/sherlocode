@@ -25,11 +25,11 @@ let rec compile ~shard = function
   | False -> QFalse
   | Exact str ->
     (try QInt_set (Db.find_ngram shard str) with
-    | Not_found ->
-      (match String.length str with
-      | 0 -> QTrue
-      | 1 when Db.Alphabet.is_alpha str.[0] -> QTrue
-      | _ -> QFalse))
+     | Not_found ->
+       (match String.length str with
+        | 0 -> QTrue
+        | 1 when Db.Alphabet.is_alpha str.[0] -> QTrue
+        | _ -> QFalse))
   | And xs ->
     let xs = List.map (compile ~shard) xs in
     let xs = List.filter (( <> ) QTrue) xs in
@@ -69,8 +69,8 @@ let rec query_successor i = function
     let rec go acc = function
       | [] ->
         (match acc with
-        | None -> raise Not_found
-        | Some j -> j)
+         | None -> raise Not_found
+         | Some j -> j)
       | x :: xs ->
         let j = query_successor_opt i x in
         let acc =

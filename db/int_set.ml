@@ -53,8 +53,8 @@ let rec branch_of_array ~depth t =
     let branches =
       Array.map
         (function
-          | [] -> Zeroes
-          | xs -> branch_of_array ~depth (Array.of_list xs))
+         | [] -> Zeroes
+         | xs -> branch_of_array ~depth (Array.of_list xs))
         children
     in
     Branch branches)

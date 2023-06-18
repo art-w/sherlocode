@@ -19,21 +19,21 @@ let clean_line ~state line =
       match line.[i], line.[i + 1], line.[i + 2] with
       | '(', '*', ')' ->
         (match state with
-        | [] -> Buffer.add_string buf "(*)"
-        | _ -> ()) ;
+         | [] -> Buffer.add_string buf "(*)"
+         | _ -> ()) ;
         go state (i + 3)
       | '(', '*', _ -> go (Comment :: state) (i + 2)
       | '*', ')', _ ->
         (match state with
-        | Comment :: state -> go state (i + 2)
-        | [] ->
-          Buffer.add_char buf '*' ;
-          go state (i + 1))
+         | Comment :: state -> go state (i + 2)
+         | [] ->
+           Buffer.add_char buf '*' ;
+           go state (i + 1))
       | chr, _, _ ->
         (match state with
-        | [] when chr = '\t' -> Buffer.add_string buf "    "
-        | [] when Db.Alphabet.is_valid chr -> Buffer.add_char buf chr
-        | _ -> ()) ;
+         | [] when chr = '\t' -> Buffer.add_string buf "    "
+         | [] when Db.Alphabet.is_valid chr -> Buffer.add_char buf chr
+         | _ -> ()) ;
         go state (i + 1))
   in
   let state = go state 0 in
