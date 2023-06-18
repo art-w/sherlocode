@@ -100,6 +100,8 @@ input[type='submit'] {
   line-height: 1.5rem;
 
   border: 2px solid var(--darkgreen);
+
+  margin-right: 1em;
 }
 
 h3 {
@@ -310,6 +312,18 @@ p.hero {
   font-size: 1.5rem;
 }
 
+.hero .new {
+  font-style: italic;
+  font-size: 1rem;
+  background: var(--yellow);
+  vertical-align: top;
+}
+
+.hero .new a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .ad {
   padding-top: 3rem;
   font-family: monospace;
@@ -319,16 +333,18 @@ p.hero {
 .ad svg { vertical-align: middle; margin-right: 0.5rem }
 
 .header a, .header a:visited {
-  display: block;
+  display: inline-block;
   color: var(--lightbg);
-  margin: 0 1em;
-  padding: 0 1em;
-  text-decoration: underline;
-  line-height: 2.5em;
+  margin: 0 2em;
+  padding: 0.25em 0;
+  text-decoration: none;
   font-size: 1rem;
   font-style: italic;
+  border-bottom: 2px solid var(--lightbg);
+  align-self: center;
 }
 
 .header a:hover {
   color: var(--yellow);
+  border-bottom: 2px solid var(--yellow);
 }

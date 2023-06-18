@@ -120,12 +120,32 @@ let link_to_repo =
     ; txt " *)"
     ]
 
+let sherlodoc_link =
+  a
+    ~a:
+      [ a_href "https://doc.sherlocode.com"
+      ; a_title "Fuzzy type/name search for OCaml documentation (Hoogle for Odoc)"
+      ]
+    [ txt "Sherlodoc" ]
+
+let sherlocoq_link =
+  a
+    ~a:
+      [ a_href "https://sherlocoq.sirref.org"
+      ; a_title "Search across Coq libraries available on opam!"
+      ]
+    [ txt "Sherlocoq" ]
+
 let frontpage =
   div
     [ h1 [ txt "Sherlocode" ]
     ; p
         ~a:[ a_class [ "hero" ] ]
-        [ txt "Search across 17 million lines of OCaml available on opam!" ]
+        [ txt "Search across 17 million lines of OCaml available on opam! "
+        ; span
+            ~a:[ a_class [ "new" ] ]
+            [ txt " NEW: also available for Coq with "; sherlocoq_link; txt "!" ]
+        ]
     ; explain_regex_syntax
     ; explain_indexing
     ; link_to_repo
@@ -147,13 +167,8 @@ let search_form query =
               ]
             ()
         ; input ~a:[ a_input_type `Submit; a_value "Search" ] ()
-        ; a
-            ~a:
-              [ a_href "https://doc.sherlocode.com"
-              ; a_title
-                  "Fuzzy type/name search for OCaml documentation (Hoogle for odoc!)"
-              ]
-            [ txt "NEW: try Sherlodoc!" ]
+        ; sherlodoc_link
+        ; sherlocoq_link
         ]
     ]
 
