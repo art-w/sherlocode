@@ -128,13 +128,13 @@ let sherlodoc_link =
       ]
     [ txt "Sherlodoc" ]
 
-let sherlocoq_link =
+let sherlorocq_link =
   a
     ~a:
-      [ a_href "https://sherlocoq.sirref.org"
-      ; a_title "Search across Coq libraries available on opam!"
+      [ a_href "https://sherlorocq.sirref.org"
+      ; a_title "Search across Rocq libraries available on opam!"
       ]
-    [ txt "Sherlocoq" ]
+    [ txt "Sherlorocq" ]
 
 let frontpage =
   div
@@ -144,7 +144,7 @@ let frontpage =
         [ txt "Search across 17 million lines of OCaml available on opam! "
         ; span
             ~a:[ a_class [ "new" ] ]
-            [ txt " NEW: also available for Coq with "; sherlocoq_link; txt "!" ]
+            [ txt " NEW: also available for Rocq with "; sherlorocq_link; txt "!" ]
         ]
     ; explain_regex_syntax
     ; explain_indexing
@@ -168,7 +168,7 @@ let search_form query =
             ()
         ; input ~a:[ a_input_type `Submit; a_value "Search" ] ()
         ; sherlodoc_link
-        ; sherlocoq_link
+        ; sherlorocq_link
         ]
     ]
 
